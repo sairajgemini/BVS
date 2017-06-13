@@ -22,8 +22,8 @@ public class UserController {
         status = UserUtil.registerUser(user);
 
         if (status == 1) {
-            modelAndView = new ModelAndView("success");
-            modelAndView.addObject("successMsg", "User successfully registered.");
+            modelAndView = new ModelAndView("registration");
+            modelAndView.addObject("successMsg", "User successfully registered. Userid : " + user.getUserId());
         } else {
             modelAndView = new ModelAndView("error");
             modelAndView.addObject("errorMsg", "User registration failed.");
