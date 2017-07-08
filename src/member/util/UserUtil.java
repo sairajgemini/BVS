@@ -50,12 +50,12 @@ public final class UserUtil {
 
                 session = hibernateUtil.createSession();
 
-                User userDuplicate = hibernateUtil.getUserByColumn(user.getEmailId());
+                User userDuplicate = hibernateUtil.getUserByEmailId(user.getEmailId());
 
                 if (userDuplicate == null) {
-                    userDuplicate = hibernateUtil.getUserByColumn(user.getMobileNumber());
+                    userDuplicate = hibernateUtil.getUserByMobile(user.getMobileNumber());
                     if (userDuplicate == null) {
-                        userDuplicate = hibernateUtil.getUserByColumn(user.getPanCardNo());
+                        userDuplicate = hibernateUtil.getUserByPAN(user.getPanCardNo());
                         if (userDuplicate != null) {
                             System.out.println("Duplicate PAN found for this user.");
                         }

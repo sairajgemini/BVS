@@ -48,17 +48,43 @@ public class HibernateUtil {
         }
     }
 
-    public User getUserByColumn(String columnName) {
+    public User getUserByEmailId(String emailId) {
         User dupUserByEmail = null;
         try {
-            Query query = session.createQuery("from  User_Registration where emailId = :columnName");
-            query.setParameter("columnName", columnName);
+            Query query = session.createQuery("from  User_Registration where emailId = :emailId");
+            query.setParameter("emailId", emailId);
 
             dupUserByEmail = (User) query.getSingleResult();
         } catch (Exception ex) {
-
+            System.out.println("Email not found in system. User can be registered.");
         }
         return dupUserByEmail;
+    }
+
+    public User getUserByPAN(String pan) {
+        User dupUserByPAN = null;
+        try {
+            Query query = session.createQuery("from  User_Registration where panCardNo = :pan");
+            query.setParameter("pan", pan);
+
+            dupUserByPAN = (User) query.getSingleResult();
+        } catch (Exception ex) {
+            System.out.println("PAN not found in system. User can be registered.");
+        }
+        return dupUserByPAN;
+    }
+
+    public User getUserByMobile(String mobile) {
+        User dupUserByMobile = null;
+        try {
+            Query query = session.createQuery("from  User_Registration where mobileNumber = :mobile");
+            query.setParameter("mobile", mobile);
+
+            dupUserByMobile = (User) query.getSingleResult();
+        } catch (Exception ex) {
+            System.out.println("Mobile not found in system. User can be registered.");
+        }
+        return dupUserByMobile;
     }
 
     public void closeSession(Session session) {
