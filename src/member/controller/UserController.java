@@ -31,6 +31,8 @@ public class UserController {
                 modelAndView.addObject("errorMsg", "User email id is already present in the system. Please choose another email id.");
             } else if (status == -1) {
                 modelAndView.addObject("errorMsg", "User mobile is already present in the system. Please choose another mobile number.");
+            } else if (status == -2) {
+                modelAndView.addObject("errorMsg", "User PAN is already present in the system. Please choose another PAN number.");
             }
         }
 

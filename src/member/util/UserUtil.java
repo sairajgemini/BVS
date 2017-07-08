@@ -74,6 +74,9 @@ public final class UserUtil {
                 } else if (userDuplicate != null && user.getMobileNumber().equals(userDuplicate.getMobileNumber())) {
                     userRegStatus = -1;
                     userDuplicate = null;
+                } else if (userDuplicate != null && user.getPanCardNo().equals(userDuplicate.getPanCardNo())) {
+                    userRegStatus = -2;
+                    userDuplicate = null;
                 } else {
                     session.save(user);
                     hibernateUtil.commitTransaction(transaction);
@@ -84,7 +87,7 @@ public final class UserUtil {
             if (transaction != null) {
                 transaction.rollback();
             }
-            userRegStatus = -2;
+            userRegStatus = -3;
             throw new ExceptionInInitializerError(ex);
         } finally {
             if (session != null)
