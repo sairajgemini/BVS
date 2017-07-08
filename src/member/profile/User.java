@@ -2,6 +2,7 @@ package member.profile;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -55,6 +56,7 @@ public class User implements Serializable {
         this.residentialAddress = residentialAddress;
     }
 
+    @Column(name = "mobilenumber", nullable = false, unique = true)
     public String getMobileNumber() {
         return mobileNumber;
     }
@@ -63,6 +65,7 @@ public class User implements Serializable {
         this.mobileNumber = mobileNumber;
     }
 
+    @Column(name = "emailid", nullable = false, unique = true)
     public String getEmailId() {
         return emailId;
     }
@@ -87,6 +90,7 @@ public class User implements Serializable {
         this.landLine = landLine;
     }
 
+    @Column(name = "pancardno", unique = true)
     public String getPanCardNo() {
         return panCardNo;
     }

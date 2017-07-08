@@ -47,17 +47,44 @@ public final class UserUtil {
         try {
             if (user != null) {
                 hibernateUtil = createHibernateUtil();
+
                 session = hibernateUtil.createSession();
+
+                User userDuplicate = hibernateUtil.getUserByColumn(user.getEmailId());
+
+                if (userDuplicate == null) {
+                    userDuplicate = hibernateUtil.getUserByColumn(user.getMobileNumber());
+                    if (userDuplicate == null) {
+                        userDuplicate = hibernateUtil.getUserByColumn(user.getPanCardNo());
+                        if (userDuplicate != null) {
+                            System.out.println("Duplicate PAN found for this user.");
+                        }
+                    } else {
+                        System.out.println("Duplicate mobile found for this user.");
+                    }
+                } else {
+                    System.out.println("Duplicate email found for this user.");
+                }
+
                 transaction = hibernateUtil.beginTransaction(session);
-                session.save(user);
-                hibernateUtil.commitTransaction(transaction);
-                userRegStatus = 1;
+
+                if (userDuplicate != null && user.getEmailId().equals(userDuplicate.getEmailId())) {
+                    userRegStatus = 0;
+                    userDuplicate = null;
+                } else if (userDuplicate != null && user.getMobileNumber().equals(userDuplicate.getMobileNumber())) {
+                    userRegStatus = -1;
+                    userDuplicate = null;
+                } else {
+                    session.save(user);
+                    hibernateUtil.commitTransaction(transaction);
+                    userRegStatus = 1;
+                }
             }
         } catch (Exception ex) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            userRegStatus = 0;
+            userRegStatus = -2;
             throw new ExceptionInInitializerError(ex);
         } finally {
             if (session != null)
@@ -65,8 +92,6 @@ public final class UserUtil {
         }
         if (userRegStatus == 1) {
             System.out.println("User registered");
-        } else {
-            System.out.println("User registration failed");
         }
         return userRegStatus;
     }

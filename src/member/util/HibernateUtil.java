@@ -1,9 +1,12 @@
 package member.util;
 
+import member.profile.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+
+import javax.persistence.Query;
 
 /**
  * Created by saikatgupta on 5/28/17.
@@ -43,6 +46,19 @@ public class HibernateUtil {
             }
             throw new ExceptionInInitializerError(ex);
         }
+    }
+
+    public User getUserByColumn(String columnName) {
+        User dupUserByEmail = null;
+        try {
+            Query query = session.createQuery("from  User_Registration where emailId = :columnName");
+            query.setParameter("columnName", columnName);
+
+            dupUserByEmail = (User) query.getSingleResult();
+        } catch (Exception ex) {
+
+        }
+        return dupUserByEmail;
     }
 
     public void closeSession(Session session) {

@@ -25,8 +25,13 @@ public class UserController {
             modelAndView = new ModelAndView("registration");
             modelAndView.addObject("successMsg", "User successfully registered. Userid : " + user.getUserId());
         } else {
-            modelAndView = new ModelAndView("error");
-            modelAndView.addObject("errorMsg", "User registration failed.");
+            modelAndView = new ModelAndView("registration");
+
+            if (status == 0) {
+                modelAndView.addObject("errorMsg", "User email id is already present in the system. Please choose another email id.");
+            } else if (status == -1) {
+                modelAndView.addObject("errorMsg", "User mobile is already present in the system. Please choose another mobile number.");
+            }
         }
 
         return modelAndView;

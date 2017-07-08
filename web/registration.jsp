@@ -30,8 +30,13 @@
 
 <body>
 <div>
-    <h4 class="container-fluid">${successMsg}</h4>
+    <h4 class="container">${successMsg}</h4>
 </div>
+
+<div>
+    <h4 class="container" style="color: red">${errorMsg}</h4>
+</div>
+
 <div class="container">
     <form action="/registerUser.html" class="form-reg" method="post">
         <h2 class="form-reg-heading">Register yourself</h2>
